@@ -9,6 +9,8 @@ import notFoundMiddleware from "./middlewares/notFoundMiddleware.js";
 import studentRouter_v2 from "./routes/studentsRoutes_v2.js";
 import studentRouter_v3 from "./routes/studentsRoutes_v3.js";
 import courseRouter_v2 from "./routes/coursesRouters_v2.js";
+import enrollment_v1 from "./routes/enrollment_v1.js";
+import enrollment_v2 from "./routes/enrollment_v2.js";
 
 const app = express();
 const port = 3000;
@@ -41,7 +43,16 @@ app.get("/me", (req: Request, res: Response) => {
     },
   });
 });
+app.get("/api/me", (req: Request, res: Response) => {
+  res.status(200).json({
+    ok: true,
+    fullName: "Krisrin Chompoongernsangsakul",
+    studentId: "680610652",
+  });
+});
 
+app.use("/api/v1/enrollments", enrollment_v1);
+app.use("/api/v2/enrollments", enrollment_v2);
 app.use("/api/v2/students", studentRouter_v2);
 app.use("/api/v3/students", studentRouter_v3);
 app.use("/api/v2/courses", courseRouter_v2);
